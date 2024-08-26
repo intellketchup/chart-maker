@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "declaration": true, // Genera archivos de declaración (.d.ts)
+      "outDir": "./dist",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+  }
+  

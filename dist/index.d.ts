@@ -1,3 +1,2 @@
 import ChartMaker from './ChartMaker';
-
-export { ChartMaker };
+export default ChartMaker;
