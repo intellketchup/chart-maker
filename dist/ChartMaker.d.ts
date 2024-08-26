@@ -1,24 +1,15 @@
-interface ChartData {
-    label: string;
-    value: number;
-}
-interface ChartOptions {
-    title?: string;
-    colors?: string[];
-    xAxis?: string;
-    yAxis?: string;
-    borderColor?: string;
-    borderWidth?: number;
-}
-interface ChartConfig {
-    data: ChartData[];
+import { ChartOptions, ChartData, ChartType, ChartTypeRegistry } from 'chart.js';
+interface ChartMakerOptions {
+    type: ChartType;
+    data: ChartData<keyof ChartTypeRegistry>;
     options?: ChartOptions;
 }
-export default class ChartMaker {
-    private config;
-    private chart;
-    constructor(config: ChartConfig);
+export declare class ChartMaker {
+    private type;
+    private data;
+    private options?;
+    constructor(options: ChartMakerOptions);
+    private createGradient;
     createChart(element: HTMLCanvasElement): void;
-    updateData(newData: ChartData[]): void;
 }
 export {};

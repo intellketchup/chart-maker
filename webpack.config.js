@@ -1,19 +1,21 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.ts', // Cambia a .ts si estás usando TypeScript
+  entry: './src/index.ts', // Apunta a index.ts
   output: {
     filename: 'chart-maker.js',
     path: path.resolve(__dirname, 'dist'),
+    library: 'ChartMaker',
+    libraryTarget: 'umd',
   },
   resolve: {
-    extensions: ['.ts', '.js'], // Añade .ts para que Webpack reconozca archivos TypeScript
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader', // Asegúrate de que ts-loader está instalado
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],

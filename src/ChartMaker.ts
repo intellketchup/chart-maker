@@ -1,90 +1,51 @@
-import Chart from 'chart.js/auto';
+import { Chart, ChartOptions, ChartData, ChartType, ChartTypeRegistry, ChartConfiguration } from 'chart.js';
 
-interface ChartData {
-  label: string;
-  value: number;
+interface ChartMakerOptions {
+    type: ChartType; // Asegúrate de que el tipo está correctamente importado
+    data: ChartData<keyof ChartTypeRegistry>;
+    options?: ChartOptions;
 }
 
-interface ChartOptions {
-  title?: string;
-  colors?: string[];
-  xAxis?: string;
-  yAxis?: string;
-  borderColor?: string;
-  borderWidth?: number;
-}
+export class ChartMaker {
+    private type: ChartType;
+    private data: ChartData<keyof ChartTypeRegistry>;
+    private options?: ChartOptions;
 
-interface ChartConfig {
-  data: ChartData[];
-  options?: ChartOptions;
-}
-
-export default class ChartMaker {
-  private config: ChartConfig;
-  private chart: Chart | null = null;
-
-  constructor(config: ChartConfig) {
-    this.config = config;
-  }
-
-  public createChart(element: HTMLCanvasElement): void {
-    if (element instanceof HTMLCanvasElement) {
-      const ctx = element.getContext('2d');
-      if (!ctx) {
-        console.error('Failed to get canvas context');
-        return;
-      }
-
-      this.chart = new Chart(ctx, {
-        type: 'bar', // Puedes hacer esto dinámico según la configuración
-        data: {
-          labels: this.config.data.map(d => d.label),
-          datasets: [{
-            label: this.config.options?.title || '',
-            data: this.config.data.map(d => d.value),
-            backgroundColor: this.config.options?.colors || '#42A5F5',
-            borderColor: this.config.options?.borderColor || '#1E88E5',
-            borderWidth: this.config.options?.borderWidth || 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              display: true
-            },
-            tooltip: {
-              callbacks: {
-                label: (context) => `${context.label}: ${context.raw}`
-              }
-            }
-          },
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: this.config.options?.xAxis || 'X Axis'
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: this.config.options?.yAxis || 'Y Axis'
-              }
-            }
-          }
-        }
-      });
-    } else {
-      console.error('The provided element is not a valid canvas element');
+    constructor(options: ChartMakerOptions) {
+        this.type = options.type;
+        this.data = options.data;
+        this.options = options.options;
     }
-  }
 
-  public updateData(newData: ChartData[]): void {
-    if (this.chart) {
-      this.chart.data.labels = newData.map(d => d.label);
-      this.chart.data.datasets[0].data = newData.map(d => d.value);
-      this.chart.update();
+    private createGradient(ctx: CanvasRenderingContext2D, colors: string[]): CanvasGradient {
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400); // Cambia los valores según el tamaño del gráfico
+        const colorStopInterval = 1 / (colors.length - 1);
+        colors.forEach((color, index) => {
+            gradient.addColorStop(index * colorStopInterval, color);
+        });
+        return gradient;
     }
-  }
+
+    public createChart(element: HTMLCanvasElement): void {
+        const ctx = element.getContext('2d');
+        if (!ctx) throw new Error('Failed to get canvas context');
+
+        const chartConfig: ChartConfiguration = {
+            type: this.type,
+            data: this.data,
+            options: this.options,
+        };
+
+        // Aplicar gradientes a los datasets si es necesario
+        this.data.datasets?.forEach((dataset: any) => {
+            if (dataset.backgroundColor && Array.isArray(dataset.backgroundColor)) {
+                dataset.backgroundColor = this.createGradient(ctx, dataset.backgroundColor);
+            }
+            if (dataset.borderColor && Array.isArray(dataset.borderColor)) {
+                dataset.borderColor = this.createGradient(ctx, dataset.borderColor);
+            }
+        });
+
+        new Chart(ctx, chartConfig);
+    }
 }

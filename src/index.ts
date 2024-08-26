@@ -1,3 +1,4 @@
-import ChartMaker from './ChartMaker';
+import { ChartMaker } from './ChartMaker'; // Cambia a importación nombrada
+import { HorizontalLinePlugin } from './HorizontalLinePlugin';
 
-export default ChartMaker;
+export { ChartMaker, HorizontalLinePlugin };
