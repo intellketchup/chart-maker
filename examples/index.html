@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Maker Example</title>
+    <script src="../dist/chart-maker.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <script>
+        // Asegúrate de que ChartMaker esté disponible
+        if (typeof ChartMaker !== 'undefined') {
+            // Crear un nuevo gráfico
+            const chartMaker = new ChartMaker.ChartMaker({
+                data: [
+                    { label: 'January', value: 30 },
+                    { label: 'February', value: 20 },
+                    { label: 'March', value: 50 }
+                ],
+                options: {
+                    title: 'Monthly Sales',
+                    colors: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    xAxis: 'Months',
+                    yAxis: 'Sales'
+                }
+            });
+
+            // Obtén el contexto del canvas
+            const ctx = document.getElementById('myChart').getContext('2d');
+            chartMaker.createChart(ctx);
+        } else {
+            console.error('ChartMaker is not defined');
+        }
+    </script>
+</body>
+</html>
