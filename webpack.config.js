@@ -1,24 +1,23 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.ts', // Apunta a index.ts
   output: {
     filename: 'chart-maker.js',
     path: path.resolve(__dirname, 'dist'),
     library: 'ChartMaker',
     libraryTarget: 'umd',
-    globalObject: 'this'
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      }
-    ]
+      },
+    ],
   },
-  mode: 'development'
 };

@@ -4,33 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chart Maker Example</title>
-    <script src="../dist/chart-maker.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <canvas id="myChart" width="400" height="200"></canvas>
-    <script>
-        // Asegúrate de que ChartMaker esté disponible
-        if (typeof ChartMaker !== 'undefined') {
-            // Crear un nuevo gráfico
-            const chartMaker = new ChartMaker.ChartMaker({
-                data: [
-                    { label: 'January', value: 30 },
-                    { label: 'February', value: 20 },
-                    { label: 'March', value: 50 }
-                ],
-                options: {
-                    title: 'Monthly Sales',
-                    colors: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    xAxis: 'Months',
-                    yAxis: 'Sales'
-                }
-            });
+    <h1>Chart Maker Example</h1>
+    <canvas id="myChart" width="400" height="400"></canvas>
 
-            // Obtén el contexto del canvas
-            const ctx = document.getElementById('myChart').getContext('2d');
-            chartMaker.createChart(ctx);
+    <!-- Import Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Import Chart Maker -->
+    <script src="chart-maker.js"></script>
+
+    <!-- Your example script -->
+    <script>
+        // Ensure the ChartMaker class is available
+        if (typeof ChartMaker === 'undefined') {
+            throw new Error('ChartMaker is not loaded');
+        }
+
+        // Configuración de los datos del gráfico
+        const data = {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Dataset 1',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Opciones del gráfico
+        const options = {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // Crea el gráfico usando ChartMaker
+        const chartMaker = new ChartMaker({
+            type: 'bar',
+            data: data,
+            options: options
+        });
+
+        const canvas = document.getElementById('myChart');
+        if (canvas instanceof HTMLCanvasElement) {
+            chartMaker.createChart(canvas);
         } else {
-            console.error('ChartMaker is not defined');
+            console.error('No se encontró el elemento canvas');
         }
     </script>
 </body>
