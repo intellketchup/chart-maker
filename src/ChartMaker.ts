@@ -1,6 +1,6 @@
 import { Chart, ChartType, ChartData, ChartOptions, Plugin, PluginOptionsByType } from 'chart.js';
 
-// Define una interfaz personalizada que extiende las opciones de gráficos de línea
+
 interface ChartOptionsWithPlugins extends Omit<ChartOptions<'line'>, 'plugins'> {
   plugins?: Partial<PluginOptionsByType<'line'>>;
 }
