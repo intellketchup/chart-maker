@@ -1,12 +1,16 @@
+// webpack.config.js
+
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.ts', // Apunta a index.ts
+  mode: 'production',
+  entry: './src/index.ts',
   output: {
     filename: 'chart-maker.js',
     path: path.resolve(__dirname, 'dist'),
     library: 'ChartMaker',
     libraryTarget: 'umd',
+    globalObject: 'this'
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -20,4 +24,8 @@ module.exports = {
       },
     ],
   },
+  externals: {
+    'chart.js': 'Chart',  // Excluir Chart.js del bundle
+    'hammerjs': 'Hammer' // Excluir hammer.js del bundle
+  }
 };

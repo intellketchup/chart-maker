@@ -1,15 +1,14 @@
-import { ChartOptions, ChartData, ChartType, ChartTypeRegistry } from 'chart.js';
-interface ChartMakerOptions {
-    type: ChartType;
-    data: ChartData<keyof ChartTypeRegistry>;
-    options?: ChartOptions;
+import { ChartData, ChartOptions, Plugin, PluginOptionsByType } from 'chart.js';
+interface ChartOptionsWithPlugins extends Omit<ChartOptions<'line'>, 'plugins'> {
+    plugins?: Partial<PluginOptionsByType<'line'>>;
+}
+interface ChartOptionsWithType {
+    type: 'line';
+    data: ChartData<'line'>;
+    options?: ChartOptionsWithPlugins;
+    plugins?: Plugin<'line'>[];
 }
 export declare class ChartMaker {
-    private type;
-    private data;
-    private options?;
-    constructor(options: ChartMakerOptions);
-    private createGradient;
-    createChart(element: HTMLCanvasElement): void;
+    static createChart(ctx: CanvasRenderingContext2D, chartOptions: ChartOptionsWithType): void;
 }
 export {};
