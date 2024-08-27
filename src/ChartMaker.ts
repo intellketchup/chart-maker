@@ -22,4 +22,24 @@ export class ChartMaker {
       plugins: chartOptions.plugins || []
     });
   }
+
+   /**
+   * Exporta el gráfico en el canvas a una imagen en formato PNG o JPEG.
+   * @param canvas - El elemento canvas que contiene el gráfico.
+   * @param format - El formato de la imagen. Puede ser 'image/png' o 'image/jpeg'.
+   * @param quality - La calidad de la imagen para el formato JPEG (entre 0 y 1). Ignorado para PNG.
+   * @returns La URL de la imagen en base64.
+   */
+   static exportChartToImage(canvas: HTMLCanvasElement, format: 'image/png' | 'image/jpeg', quality: number = 1): string {
+    if (format !== 'image/png' && format !== 'image/jpeg') {
+      throw new Error('Formato no soportado. Use "image/png" o "image/jpeg".');
+    }
+
+    if (format === 'image/jpeg' && (quality < 0 || quality > 1)) {
+      throw new Error('La calidad debe estar entre 0 y 1.');
+    }
+
+    // Convertir el canvas a una imagen en base64
+    return canvas.toDataURL(format, quality);
+  }
 }
