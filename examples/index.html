@@ -1,69 +1,102 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chart.js con JavaScript</title>
+    <title>Chart Maker Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Asegúrate de que la URL o la ruta sea correcta para chart-maker -->
+    <script src="../dist/chart-maker.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
         #chart-container {
             width: 80%;
             margin: auto;
         }
+        canvas {
+            max-width: 100%;
+        }
     </style>
-    <!-- Incluye Chart.js desde un CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="chart-container">
         <canvas id="myChart"></canvas>
+        <button id="export-png">Export as PNG</button>
+        <button id="export-jpeg">Export as JPEG</button>
     </div>
 
     <script>
-        // Define la función principal para crear el gráfico
-        function createChart() {
-            const ctx = document.getElementById('myChart').getContext('2d');
-            const myChart = new Chart(ctx, {
+        // Verificar si ChartMaker está disponible en window
+        console.log('window.ChartMaker:', window.ChartMaker);
+
+        // Asegúrate de que ChartMaker está definido
+        const ChartMaker = window.ChartMaker ? window.ChartMaker.ChartMaker : null;
+
+        if (!ChartMaker) {
+            console.error('ChartMaker is not available.');
+        } else {
+            // Selecciona el elemento canvas en tu documento
+            const canvas = document.getElementById('myChart');
+
+            // Configura los datos y opciones del gráfico
+            const chartConfig = {
                 type: 'line',
                 data: {
-                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
+                    labels: ['January', 'February', 'March'],
                     datasets: [{
-                        label: 'Mi primer dataset',
-                        data: [65, 59, 80, 81, 56, 55, 40],
-                        fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
-                        tension: 0.1
+                        label: 'Sample Dataset',
+                        data: [10, 20, 30],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     }]
                 },
                 options: {
                     responsive: true,
-                    scales: {
-                        x: {
+                    plugins: {
+                        legend: {
                             display: true,
-                            title: {
-                                display: true,
-                                text: 'Meses'
-                            }
                         },
-                        y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Valor'
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 100
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw;
+                                }
+                            }
                         }
                     }
                 }
+            };
+
+            // Crear el gráfico utilizando ChartMaker
+            if (canvas) {
+                ChartMaker.createChart(canvas, chartConfig);
+            } else {
+                console.error('Canvas element is missing.');
+            }
+
+            // Función para exportar el gráfico a una imagen
+            function exportChart(format, quality) {
+                if (canvas) {
+                    const imageDataURL = ChartMaker.exportChartToImage(canvas, format, quality);
+
+                    // Crear un enlace para descargar la imagen
+                    const link = document.createElement('a');
+                    link.href = imageDataURL;
+                    link.download = `chart.${format.split('/')[1]}`;
+                    link.click();
+                } else {
+                    console.error('Canvas element is missing.');
+                }
+            }
+
+            // Añadir eventos a los botones para exportar el gráfico
+            document.getElementById('export-png').addEventListener('click', () => {
+                exportChart('image/png');
+            });
+
+            document.getElementById('export-jpeg').addEventListener('click', () => {
+                exportChart('image/jpeg', 0.9); // Calidad JPEG de 0.9
             });
         }
-
-        // Espera a que el documento esté completamente cargado antes de crear el gráfico
-        document.addEventListener('DOMContentLoaded', createChart);
     </script>
 </body>
 </html>
