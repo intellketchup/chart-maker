@@ -22,6 +22,8 @@
         <canvas id="myChart"></canvas>
         <button id="export-png">Export as PNG</button>
         <button id="export-jpeg">Export as JPEG</button>
+        <button id="export-svg">Export as SVG</button>
+        <button id="export-pdf">Export as PDF</button>
     </div>
 
     <script>
@@ -95,6 +97,14 @@
 
             document.getElementById('export-jpeg').addEventListener('click', () => {
                 exportChart('image/jpeg', 0.9); // Calidad JPEG de 0.9
+            });
+
+            document.getElementById('export-svg').addEventListener('click', () => {
+                exportChart('image/svg'); // Calidad JPEG de 0.9
+            });
+
+            document.getElementById('export-pdf').addEventListener('click', () => {
+                exportChart('pdf'); // Calidad JPEG de 0.9
             });
         }
     </script>
