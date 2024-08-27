@@ -1,0 +1,41 @@
+# src/ZoomPlugin.coffee
+
+{ Chart, Plugin } = require 'chart.js'
+Hammer = require 'hammerjs'
+
+# Definir el plugin de zoom para gráficos de línea
+ZoomPlugin = 
+  id: 'zoomPlugin'
+
+  beforeInit: (chart) ->
+    hammer = new Hammer(chart.canvas)
+
+    hammer.get('pinch').set({ enable: true })
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+
+    hammer.on 'pinch', (event) ->
+      scale = event.scale
+      xScale = chart.scales['x']
+      yScale = chart.scales['y']
+
+      if xScale and yScale
+        xScale.options.min *= scale
+        xScale.options.max *= scale
+        yScale.options.min *= scale
+        yScale.options.max *= scale
+        chart.update()
+
+    hammer.on 'pan', (event) ->
+      deltaX = event.deltaX
+      deltaY = event.deltaY
+      xScale = chart.scales['x']
+      yScale = chart.scales['y']
+
+      if xScale and yScale
+        xScale.options.min -= deltaX
+        xScale.options.max -= deltaX
+        yScale.options.min += deltaY
+        yScale.options.max += deltaY
+        chart.update()
+
+module.exports = ZoomPlugin
