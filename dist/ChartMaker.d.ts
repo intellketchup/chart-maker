@@ -17,6 +17,6 @@ export declare class ChartMaker {
     * @param quality - La calidad de la imagen para el formato JPEG (entre 0 y 1). Ignorado para PNG.
     * @returns La URL de la imagen en base64.
     */
-    static exportChartToImage(canvas: HTMLCanvasElement, format: 'image/png' | 'image/jpeg', quality?: number): string;
+    static exportChartToImage(canvas: HTMLCanvasElement, format: 'image/png' | 'image/jpeg' | 'image/svg' | 'pdf', quality?: number): string;
 }
 export {};

@@ -30,10 +30,11 @@ export class ChartMaker {
    * @param quality - La calidad de la imagen para el formato JPEG (entre 0 y 1). Ignorado para PNG.
    * @returns La URL de la imagen en base64.
    */
-   static exportChartToImage(canvas: HTMLCanvasElement, format: 'image/png' | 'image/jpeg', quality: number = 1): string {
-    if (format !== 'image/png' && format !== 'image/jpeg') {
+   static exportChartToImage(canvas: HTMLCanvasElement, format: 'image/png' | 'image/jpeg' | 'image/svg' | 'pdf', quality: number = 1.0): string {
+    if (format !== 'image/png' && format !== 'image/jpeg' && format !== 'image/svg' && format !== 'pdf') {
       throw new Error('Formato no soportado. Use "image/png" o "image/jpeg".');
     }
+    
 
     if (format === 'image/jpeg' && (quality < 0 || quality > 1)) {
       throw new Error('La calidad debe estar entre 0 y 1.');
