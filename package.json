@@ -10,13 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chart.js": "^4.4.4"
+    "chart.js": "^4.4.4",
+    "hammerjs": "^2.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
     "@types/chart.js": "^2.9.41",
+    "@types/hammerjs": "^2.0.45",
     "babel-loader": "^9.1.3",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",

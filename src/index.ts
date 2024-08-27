@@ -1,4 +1,4 @@
-import { ChartMaker } from './ChartMaker'; // Cambia a importación nombrada
-import { HorizontalLinePlugin } from './HorizontalLinePlugin';
+// src/index.ts
 
-export { ChartMaker, HorizontalLinePlugin };
+export { ChartMaker } from './ChartMaker';
+export { ZoomPlugin } from './ZoomPlugin';

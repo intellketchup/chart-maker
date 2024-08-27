@@ -1,3 +1,2 @@
-import { ChartMaker } from './ChartMaker';
-import { HorizontalLinePlugin } from './HorizontalLinePlugin';
-export { ChartMaker, HorizontalLinePlugin };
+export { ChartMaker } from './ChartMaker';
+export { ZoomPlugin } from './ZoomPlugin';
