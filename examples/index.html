@@ -41,34 +41,48 @@
 
             // Configura los datos y opciones del gráfico
             const chartConfig = {
-                type: 'bar', // Cambia a 'line' o cualquier otro tipo si lo deseas
-                data: {
-                    labels: ['January', 'February', 'March'],
-                    datasets: [{
-                    label: 'Sales',
-                    data: [10, 20, 30],
-                    backgroundColor: ['red', 'blue', 'green']
-                    }]
-                },
-                options: {
-                    animation: {
-                    duration: 2000, // Duración de 2 segundos
-                    easing: 'easeOutBounce', // Efecto de animación
-                    onComplete: (animation) => {
-                        console.log('Animación completada!');
-                    }
-                    },
-                    legend: {
-                    display: true,
-                    position: 'top',
-                    align: 'center',
-                    labels: {
-                        color: 'blue',
-                        font: { size: 14 }
-                    }
-                    }
-                }
-
+                type: 'bar', // Tipo de gráfico
+  data: {
+    labels: ['January', 'February', 'March'],
+    datasets: [{
+      label: 'Sales',
+      data: [10, 20, 30],
+      backgroundColor: ['red', 'blue', 'green']
+    }]
+  },
+  options: {
+    animation: {
+      duration: 2000,
+      easing: 'easeOutBounce',
+      onComplete: (animation) => {
+        console.log('Animación completada!');
+      }
+    },
+    legend: {
+      display: true,
+      position: 'top',
+      align: 'center',
+      labels: {
+        color: 'blue',
+        font: { size: 14 }
+      }
+    },
+    onClick: (event, activeElements, chart) => {
+      if (activeElements.length > 0) {
+        const index = activeElements[0].index;
+        const datasetIndex = activeElements[0].datasetIndex;
+        const label = chart.data.labels[index];
+        const value = chart.data.datasets[datasetIndex].data[index];
+        alert(`Clicked on: ${label}, Value: ${value}`);
+      }
+    },
+    hover: {
+      mode: 'nearest',
+      onHover: (event, activeElements) => {
+        event.native.target.style.cursor = activeElements.length ? 'pointer' : 'default';
+      }
+    }
+  }
 
             };
 

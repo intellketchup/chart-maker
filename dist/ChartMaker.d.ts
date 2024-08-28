@@ -1,4 +1,4 @@
-import { ChartType, ChartData, ChartOptions, Plugin } from 'chart.js';
+import { Chart, ChartType, ChartData, ChartOptions, Plugin, InteractionItem } from 'chart.js';
 interface ChartOptionsWithPlugins {
     legend?: {
         display?: boolean;
@@ -16,6 +16,12 @@ interface ChartOptionsWithPlugins {
         easing?: 'linear' | 'easeInOutQuad' | 'easeOutBounce' | 'easeInBounce' | 'easeOutQuart' | 'easeInQuart' | 'easeOutElastic';
         onProgress?: (animation: any) => void;
         onComplete?: (animation: any) => void;
+    };
+    onClick?: (event: MouseEvent, activeElements: InteractionItem[], chart: Chart) => void;
+    hover?: {
+        mode?: 'nearest' | 'index' | 'dataset' | 'point';
+        animationDuration?: number;
+        onHover?: (event: MouseEvent, activeElements: InteractionItem[], chart: Chart) => void;
     };
     [key: string]: any;
 }

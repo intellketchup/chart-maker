@@ -1,33 +1,46 @@
 // eslint-disable-next-line no-unused-vars
-import { Chart, ChartType, ChartData, ChartOptions, Plugin, CoreChartOptions, ElementChartOptions, PluginChartOptions, DatasetChartOptions, ScaleChartOptions, DefaultDataPoint } from 'chart.js';
+import {
+  Chart,
+  ChartType,
+  ChartData,
+  ChartOptions,
+  Plugin,
+  InteractionItem
+} from 'chart.js';
 
-// Extender las opciones del gráfico con soporte para animaciones y plugins personalizados
+// Extender las opciones del gráfico con soporte para animaciones, plugins personalizados e interactividad
 interface ChartOptionsWithPlugins {
   legend?: {
-    display?: boolean; // Muestra u oculta la leyenda
-    position?: 'top' | 'left' | 'bottom' | 'right'; // Posición de la leyenda
-    align?: 'start' | 'center' | 'end'; // Alineación de la leyenda
+    display?: boolean;
+    position?: 'top' | 'left' | 'bottom' | 'right';
+    align?: 'start' | 'center' | 'end';
     labels?: {
-      color?: string; // Color del texto de las etiquetas
+      color?: string;
       font?: {
-        size?: number; // Tamaño de fuente de las etiquetas
+        size?: number;
       };
     };
   };
   animation?: {
-    duration?: number; // Duración de la animación en milisegundos
-    easing?: 'linear' | 'easeInOutQuad' | 'easeOutBounce' | 'easeInBounce' | 'easeOutQuart' | 'easeInQuart' | 'easeOutElastic'; // Tipo de efecto de la animación
-    onProgress?: (animation: any) => void; // Función de callback durante la animación
-    onComplete?: (animation: any) => void; // Función de callback cuando la animación se completa
+    duration?: number;
+    easing?: 'linear' | 'easeInOutQuad' | 'easeOutBounce' | 'easeInBounce' | 'easeOutQuart' | 'easeInQuart' | 'easeOutElastic';
+    onProgress?: (animation: any) => void;
+    onComplete?: (animation: any) => void;
   };
-  [key: string]: any; // Permite otros plugins de Chart.js
+  onClick?: (event: MouseEvent, activeElements: InteractionItem[], chart: Chart) => void; // Nuevo: Evento de clic personalizado
+  hover?: {
+    mode?: 'nearest' | 'index' | 'dataset' | 'point'; // Nuevo: Opciones de interacción al pasar el ratón
+    animationDuration?: number;
+    onHover?: (event: MouseEvent, activeElements: InteractionItem[], chart: Chart) => void; // Nuevo: Evento de hover personalizado
+  };
+  [key: string]: any;
 }
 
 // Interfaz genérica para opciones de gráficos que soportan diferentes tipos de gráficos
 interface ChartOptionsWithType<T extends ChartType> {
   type: T;
   data: ChartData<T>;
-  options?: ChartOptions<T> & ChartOptionsWithPlugins; // Combina opciones de Chart.js con las nuestras
+  options?: ChartOptions<T> & ChartOptionsWithPlugins;
   plugins?: Plugin<T>[];
 }
 
@@ -40,7 +53,7 @@ export class ChartMaker {
     new Chart<T>(ctx, {
       type: chartOptions.type,
       data: chartOptions.data,
-      options: chartOptions.options, // Esto debería ser compatible ahora
+      options: chartOptions.options,
       plugins: chartOptions.plugins || []
     });
   }
@@ -65,7 +78,6 @@ export class ChartMaker {
       throw new Error('La calidad debe estar entre 0 y 1.');
     }
 
-    // Convertir el canvas a una imagen en base64
     return canvas.toDataURL(format, quality);
   }
 }
