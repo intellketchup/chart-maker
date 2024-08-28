@@ -2,9 +2,24 @@
 import { Chart, ChartType, ChartData, ChartOptions, Plugin, PluginOptionsByType } from 'chart.js';
 
 
+
 interface ChartOptionsWithPlugins extends Omit<ChartOptions<'line'>, 'plugins'> {
-  plugins?: Partial<PluginOptionsByType<'line'>>;
+  plugins?: {
+    legend?: {
+      display?: boolean; // Muestra u oculta la leyenda
+      position?: 'top' | 'left' | 'bottom' | 'right'; // Posición de la leyenda
+      align?: 'start' | 'center' | 'end'; // Alineación de la leyenda
+      labels?: {
+        color?: string; // Color del texto de las etiquetas
+        font?: {
+          size?: number; // Tamaño de fuente de las etiquetas
+        };
+      };
+    };
+    [key: string]: any; // Permite otros plugins de Chart.js
+  };
 }
+
 
 // Define la interfaz que se utilizará al crear un gráfico
 interface ChartOptionsWithType {

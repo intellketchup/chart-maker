@@ -1,6 +1,19 @@
-import { ChartData, ChartOptions, Plugin, PluginOptionsByType } from 'chart.js';
+import { ChartData, ChartOptions, Plugin } from 'chart.js';
 interface ChartOptionsWithPlugins extends Omit<ChartOptions<'line'>, 'plugins'> {
-    plugins?: Partial<PluginOptionsByType<'line'>>;
+    plugins?: {
+        legend?: {
+            display?: boolean;
+            position?: 'top' | 'left' | 'bottom' | 'right';
+            align?: 'start' | 'center' | 'end';
+            labels?: {
+                color?: string;
+                font?: {
+                    size?: number;
+                };
+            };
+        };
+        [key: string]: any;
+    };
 }
 interface ChartOptionsWithType {
     type: 'line';
