@@ -23,6 +23,8 @@ module.exports = [
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
       "security/detect-object-injection": "off", // Personaliza las reglas según sea necesario
+      "PluginIgnore": "off",
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
     },
   },
 ];

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { Chart, ChartType, ChartData, ChartOptions, Plugin, PluginOptionsByType } from 'chart.js';
 
 
