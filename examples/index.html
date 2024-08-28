@@ -41,39 +41,49 @@
 
             // Configura los datos y opciones del gráfico
             const chartConfig = {
-                type: 'line',
-                data: {
-                    labels: ['January', 'February', 'March'],
-                    datasets: [{
-                        label: 'Sample Dataset',
-                        data: [10, 20, 30],
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            align: 'center',
-                            labels: {
-                            color: 'blue',
-                            font: {
-                                size: 14
-                            }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw;
-                                }
-                            }
-                        }
-                    }
-                }
+                type: 'bar', // Tipo de gráfico
+  data: {
+    labels: ['January', 'February', 'March'],
+    datasets: [{
+      label: 'Sales',
+      data: [10, 20, 30],
+      backgroundColor: ['red', 'blue', 'green']
+    }]
+  },
+  options: {
+    animation: {
+      duration: 2000,
+      easing: 'easeOutBounce',
+      onComplete: (animation) => {
+        console.log('Animación completada!');
+      }
+    },
+    legend: {
+      display: true,
+      position: 'top',
+      align: 'center',
+      labels: {
+        color: 'blue',
+        font: { size: 14 }
+      }
+    },
+    onClick: (event, activeElements, chart) => {
+      if (activeElements.length > 0) {
+        const index = activeElements[0].index;
+        const datasetIndex = activeElements[0].datasetIndex;
+        const label = chart.data.labels[index];
+        const value = chart.data.datasets[datasetIndex].data[index];
+        alert(`Clicked on: ${label}, Value: ${value}`);
+      }
+    },
+    hover: {
+      mode: 'nearest',
+      onHover: (event, activeElements) => {
+        event.native.target.style.cursor = activeElements.length ? 'pointer' : 'default';
+      }
+    }
+  }
+
             };
 
             // Crear el gráfico utilizando ChartMaker
