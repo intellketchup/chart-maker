@@ -41,7 +41,7 @@
 
             // Configura los datos y opciones del gráfico
             const chartConfig = {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: ['January', 'February', 'March'],
                     datasets: [{
@@ -49,6 +49,12 @@
                         data: [10, 20, 30],
                         borderColor: 'rgba(75, 192, 192, 1)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    },
+                    {
+                        label: 'Sample2',
+                        data: [12, 23, 20],
+                        borderColor: 'rgba(10, 19, 19, 1)',
+                        backgroundColor: 'rgba(75, 190, 190, 0.2)',
                     }]
                 },
                 options: {
