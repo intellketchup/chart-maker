@@ -41,45 +41,35 @@
 
             // Configura los datos y opciones del gráfico
             const chartConfig = {
-                type: 'bar',
+                type: 'bar', // Cambia a 'line' o cualquier otro tipo si lo deseas
                 data: {
                     labels: ['January', 'February', 'March'],
                     datasets: [{
-                        label: 'Sample Dataset',
-                        data: [10, 20, 30],
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    },
-                    {
-                        label: 'Sample2',
-                        data: [12, 23, 20],
-                        borderColor: 'rgba(10, 19, 19, 1)',
-                        backgroundColor: 'rgba(75, 190, 190, 0.2)',
+                    label: 'Sales',
+                    data: [10, 20, 30],
+                    backgroundColor: ['red', 'blue', 'green']
                     }]
                 },
                 options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            align: 'center',
-                            labels: {
-                            color: 'blue',
-                            font: {
-                                size: 14
-                            }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw;
-                                }
-                            }
-                        }
+                    animation: {
+                    duration: 2000, // Duración de 2 segundos
+                    easing: 'easeOutBounce', // Efecto de animación
+                    onComplete: (animation) => {
+                        console.log('Animación completada!');
+                    }
+                    },
+                    legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'center',
+                    labels: {
+                        color: 'blue',
+                        font: { size: 14 }
+                    }
                     }
                 }
+
+
             };
 
             // Crear el gráfico utilizando ChartMaker

@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Chart, ChartType, ChartData, ChartOptions, Plugin, CoreChartOptions, ElementChartOptions, PluginChartOptions, DatasetChartOptions, ScaleChartOptions, DefaultDataPoint } from 'chart.js';
 
-// Definir las opciones del gráfico con soporte para plugins personalizados
+// Extender las opciones del gráfico con soporte para animaciones y plugins personalizados
 interface ChartOptionsWithPlugins {
   legend?: {
     display?: boolean; // Muestra u oculta la leyenda
@@ -13,6 +13,12 @@ interface ChartOptionsWithPlugins {
         size?: number; // Tamaño de fuente de las etiquetas
       };
     };
+  };
+  animation?: {
+    duration?: number; // Duración de la animación en milisegundos
+    easing?: 'linear' | 'easeInOutQuad' | 'easeOutBounce' | 'easeInBounce' | 'easeOutQuart' | 'easeInQuart' | 'easeOutElastic'; // Tipo de efecto de la animación
+    onProgress?: (animation: any) => void; // Función de callback durante la animación
+    onComplete?: (animation: any) => void; // Función de callback cuando la animación se completa
   };
   [key: string]: any; // Permite otros plugins de Chart.js
 }

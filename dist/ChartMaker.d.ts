@@ -11,6 +11,12 @@ interface ChartOptionsWithPlugins {
             };
         };
     };
+    animation?: {
+        duration?: number;
+        easing?: 'linear' | 'easeInOutQuad' | 'easeOutBounce' | 'easeInBounce' | 'easeOutQuart' | 'easeInQuart' | 'easeOutElastic';
+        onProgress?: (animation: any) => void;
+        onComplete?: (animation: any) => void;
+    };
     [key: string]: any;
 }
 interface ChartOptionsWithType<T extends ChartType> {
