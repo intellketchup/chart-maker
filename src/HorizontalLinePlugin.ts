@@ -1,4 +1,4 @@
-import { Chart, ChartType, ChartData, ChartOptions, ChartTypeRegistry } from 'chart.js';
+import { Chart } from 'chart.js';
 
 export class HorizontalLinePlugin {
     static id = 'horizontalLinePlugin';
@@ -12,7 +12,7 @@ export class HorizontalLinePlugin {
 
     // Método para aplicar el plugin
     static beforeDraw(chart: Chart, _args: any, options: any) {
-        const { ctx, chartArea, data } = chart;
+        const { ctx, chartArea } = chart;
         const { color, lineWidth, yValue } = options;
         
         // Dibuja una línea horizontal en el gráfico
